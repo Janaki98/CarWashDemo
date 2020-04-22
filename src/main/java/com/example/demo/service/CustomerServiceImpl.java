@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.Exceptions.CarWashException;
 import com.example.demo.dao.CustomerDao;
+import com.example.demo.entity.CustCarDetails;
 import com.example.demo.entity.CustomerDetails;
 
 @Service
@@ -25,6 +26,14 @@ public class CustomerServiceImpl implements CustomerService {
 		}
 		return true;
 
+	}
+
+	@Override
+	public boolean addDetails(CustCarDetails details) throws CarWashException {
+		
+		boolean result =  custDao.addDetails(details);
+		
+		return result;
 	}
 
 }
