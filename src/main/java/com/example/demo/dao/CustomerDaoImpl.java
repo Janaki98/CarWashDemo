@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.Exceptions.CarWashException;
 import com.example.demo.entity.CustomerDetails;
 
 @Repository
@@ -14,24 +15,19 @@ public class CustomerDaoImpl implements CustomerDao {
 	private MongoTemplate mongoTemplate;
 
 	@Override
-	public boolean findUser(CustomerDetails user) throws Exception {
+	public boolean findUser(CustomerDetails user) throws CarWashException {
 
 		String uName = user.getUserName();
 		try {
 			Query query = new Query();
-			System.out.println(query);
 			query = query.addCriteria(Criteria.where("userName").is(uName));
-
-			System.out.println(query);
-			System.out.println("reposit");
 
 			boolean dataExists = mongoTemplate.exists(query, "customerDetails");
 			if (dataExists) {
-				System.out.println("data exists");
 				return true;
 			}
 		} catch (Exception e) {
-			throw new Exception("reposit error");
+			throw new CarWashException("reposit error");
 		}
 		return false;
 

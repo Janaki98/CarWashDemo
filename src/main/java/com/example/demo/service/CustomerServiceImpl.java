@@ -3,6 +3,7 @@ package com.example.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.Exceptions.CarWashException;
 import com.example.demo.dao.CustomerDao;
 import com.example.demo.entity.CustomerDetails;
 
@@ -16,13 +17,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public boolean login(CustomerDetails custDetails) throws Exception {
+	public boolean login(CustomerDetails custDetails) throws CarWashException {
 
-		System.out.println("service entered");
 		boolean result = custDao.findUser(custDetails);
 		if (!result) {
-			throw new Exception("error");
-
+			throw new CarWashException("error");
 		}
 		return true;
 
