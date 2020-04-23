@@ -9,4 +9,6 @@ public interface CustomerDao {
 	public boolean findUser(CustomerDetails customer) throws CarWashException;
 
 	public boolean addDetails(CustCarDetails details) throws CarWashException;
+
+	public CustomerDetails addUser(CustomerDetails customer) throws CarWashException;
 }

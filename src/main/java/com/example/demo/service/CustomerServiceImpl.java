@@ -36,4 +36,11 @@ public class CustomerServiceImpl implements CustomerService {
 		return result;
 	}
 
+	@Override
+	public CustomerDetails register(CustomerDetails customer) throws CarWashException {
+		
+		CustomerDetails addUser = custDao.addUser(customer);
+		return addUser;
+	}
+
 }

@@ -16,14 +16,16 @@ public class CustomerDaoImpl implements CustomerDao {
 	private MongoTemplate mongoTemplate;
 
 	Query query = new Query();
+
 	@Override
 	public boolean findUser(CustomerDetails user) throws CarWashException {
 
 		String uName = user.getUserName();
 		String pwd = user.getPassword();
 		try {
-			
-			query = query.addCriteria(Criteria.where("userName").is(uName).andOperator(Criteria.where("password").is(pwd)));
+
+			query = query
+					.addCriteria(Criteria.where("userName").is(uName).andOperator(Criteria.where("password").is(pwd)));
 
 			boolean dataExists = mongoTemplate.exists(query, "customerDetails");
 			if (dataExists) {
@@ -38,17 +40,39 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	@Override
 	public boolean addDetails(CustCarDetails details) throws CarWashException {
-		
+
 		try {
 			CustCarDetails dataExists = mongoTemplate.insert(details, "custCarDetails");
-	
-			if(dataExists!=null) {
+
+			if (dataExists != null) {
 				return true;
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new CarWashException("error occurred");
 		}
 		return false;
+	}
+
+	@Override
+	public CustomerDetails addUser(CustomerDetails customer) throws CarWashException {
+
+		String uName = customer.getUserName();
+		String pwd = customer.getPassword();
+		CustomerDetails addedUser;
+		try {
+
+			query = query.addCriteria(Criteria.where("userName").is(uName));
+			boolean dataExists = mongoTemplate.exists(query, "customerDetails");
+
+			if (!dataExists) {
+				addedUser = mongoTemplate.insert(customer, "customerDetails");
+			} else {
+				throw new CarWashException("User Already Exists");
+			}
+		} catch (Exception e) {
+			throw new CarWashException("reposit error");
+		}
+		return addedUser;
 	}
 
 }

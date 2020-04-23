@@ -42,4 +42,17 @@ public class Customer {
 		return "Added Successfully";
 		
 	}
+	
+	@RequestMapping(value = "/register", method = RequestMethod.POST, consumes = "application/json", produces = "text/plain")
+	public String addUser(@RequestBody CustomerDetails customer) throws CarWashException {
+
+		CustomerDetails newUser;
+		try {
+			 newUser = custService.register(customer);
+		} catch (Exception e) {
+			throw new CarWashException("User Already Exists");
+		}
+		return newUser +" Registered Successfully";
+	}
+
 }

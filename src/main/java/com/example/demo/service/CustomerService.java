@@ -10,5 +10,7 @@ public interface CustomerService {
 
 	boolean addDetails(CustCarDetails details) throws CarWashException;
 
+	CustomerDetails register(CustomerDetails customer) throws CarWashException;
+
 
 }
