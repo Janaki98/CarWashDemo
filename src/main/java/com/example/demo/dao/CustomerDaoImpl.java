@@ -64,7 +64,7 @@ public class CustomerDaoImpl implements CustomerDao {
 			query = query.addCriteria(Criteria.where("userName").is(uName));
 			boolean dataExists = mongoTemplate.exists(query, "customerDetails");
 
-			if (!dataExists) {
+			if (dataExists!=true) {
 				addedUser = mongoTemplate.insert(customer, "customerDetails");
 			} else {
 				throw new CarWashException("User Already Exists");
